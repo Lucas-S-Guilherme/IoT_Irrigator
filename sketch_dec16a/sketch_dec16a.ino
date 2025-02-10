@@ -32,7 +32,7 @@ void loop() {
     Serial.println("Umidade: " + String(umidade));
 
     // Lógica para controle da bomba
-    if (umidade > 800) {  // Valor de limite de umidade (ajuste conforme necessário)
+    if (umidade > 800) {  // Valor de limite de umidade (ajuste conforme necessário) - testes
       Serial.println("Baixa umidade detectada! Ligando a bomba de irrigação...");
       digitalWrite(RELAY_PIN,HIGH ); // Ativa o relé (bomba ligada)
     } else {
