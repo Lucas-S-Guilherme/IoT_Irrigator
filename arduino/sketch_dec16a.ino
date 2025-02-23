@@ -34,10 +34,10 @@ void loop() {
     // Lógica para controle da bomba
     if (umidade > 800) {  // Valor de limite de umidade (ajuste conforme necessário)
       Serial.println("Baixa umidade detectada! Ligando a bomba de irrigação...");
-      digitalWrite(RELAY_PIN,HIGH ); // Ativa o relé (bomba ligada)
+      digitalWrite(RELAY_PIN, LOW); // Ativa o relé (bomba ligada)
     } else {
       Serial.println("Umidade suficiente. Desligando a bomba...");
-      digitalWrite(RELAY_PIN, LOW); // Desativa o relé (bomba desligada)
+      digitalWrite(RELAY_PIN, HIGH); // Desativa o relé (bomba desligada)
     }
     
     // Enviar os dados para a API
@@ -59,5 +59,5 @@ void loop() {
     WiFi.begin(ssid, password);
   }
 
-  delay(1000); // Enviar dados a cada 10 segundos
+  delay(5000); // Enviar dados a cada 5 segundos
 }

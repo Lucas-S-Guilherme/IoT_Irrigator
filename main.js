@@ -1,18 +1,23 @@
-const express = require('express');
-const path = require('path');
-const cors = require('cors');
+const { exec } = require('child_process');
 
-const app = express();
-
-// Servindo arquivos estáticos (como o seu HTML e JS)
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(cors());
-// Rota para servir a página principal
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+// Iniciar backend
+exec('node backend/index.js', (error, stdout, stderr) => {
+  if (error) {
+    console.error(`Erro ao iniciar o backend: ${error.message}`);
+    return;
+  }
+  console.log(`Backend: ${stdout}`);
 });
 
-// Configuração para o servidor rodar na porta 8080
-app.listen(8080, () => {
-  console.log('Servidor rodando na porta 8080');
+// Iniciar frontend
+exec('npx http-server frontend -p 8080', (error, stdout, stderr) => {
+  if (error) {
+    console.error(`Erro ao iniciar o frontend: ${error.message}`);
+    return;
+  }
+  console.log(`Frontend: ${stdout}`);
 });
+
+console.log('Servidor backend e frontend iniciados.');
+console.log('Backend: http://localhost:3000');
+console.log('Frontend: http://localhost:8080');
