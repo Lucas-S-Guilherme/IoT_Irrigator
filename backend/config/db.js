@@ -4,7 +4,7 @@ const mysql = require('mysql2');
 const connection = mysql.createConnection({
   host: 'localhost',      // Endereço do banco de dados
   user: 'root',           // Usuário do banco de dados
-  password: 'sua_senha',  // Senha do banco de dados
+  password: 'Banco1234!',  // Senha do banco de dados
   database: 'iot_irrigation' // Nome do banco de dados
 });
 
