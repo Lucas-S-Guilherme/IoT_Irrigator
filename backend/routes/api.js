@@ -46,6 +46,22 @@ router.post('/selecionar-planta', async (req, res) => {
   }
 });
 
+// Nova rota para buscar as informações de umidade da planta
+router.get('/planta/:nomePlanta', (req, res) => {
+  const nomePlanta = req.params.nomePlanta;
+
+  if (!plantas[nomePlanta]) {
+    return res.status(404).json({ message: 'Planta não encontrada.' });
+  }
+
+  const planta = plantas[nomePlanta];
+  res.status(200).json({
+    nome: planta.tipo,
+    umidadeMin: planta.umidadeMinima,
+    umidadeMax: planta.umidadeMaxima
+  });
+});
+
 // Endpoint para ler umidade e acionar irrigação
 router.get('/monitorar', async (req, res) => {
   const { usuarioId } = req.query;

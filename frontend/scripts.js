@@ -16,6 +16,33 @@ function mostrarTelaMonitoramento() {
   document.getElementById('nome-usuario-planta').innerText = `Usuário: ${nomeUsuario} | Planta: ${tipoPlanta}`;
 }
 
+// Alternar para a tela inicial
+function mostrarTelaInicial() {
+  document.getElementById('tela-monitoramento').style.display = 'none'; // Oculta a tela de monitoramento
+  document.getElementById('tela-inicial').style.display = 'block'; // Exibe a tela inicial
+}
+
+// Salvar dados no localStorage
+function salvarDadosLocalStorage() {
+  localStorage.setItem('nomeUsuario', nomeUsuario);
+  localStorage.setItem('tipoPlanta', tipoPlanta);
+  localStorage.setItem('usuarioId', usuarioId);
+}
+
+// Carregar dados do localStorage
+function carregarDadosLocalStorage() {
+  nomeUsuario = localStorage.getItem('nomeUsuario') || '';
+  tipoPlanta = localStorage.getItem('tipoPlanta') || '';
+  usuarioId = localStorage.getItem('usuarioId') || null;
+
+  if (nomeUsuario && tipoPlanta) {
+    document.getElementById('nome-usuario').value = nomeUsuario;
+    document.getElementById('selecionar-planta').value = tipoPlanta;
+    mostrarTelaMonitoramento();
+    fetchMoistureData(); // Carrega os dados ao iniciar
+  }
+}
+
 // Função para iniciar o monitoramento
 document.getElementById('btn-iniciar-monitoramento').addEventListener('click', async () => {
   nomeUsuario = document.getElementById('nome-usuario').value;
@@ -44,6 +71,7 @@ document.getElementById('btn-iniciar-monitoramento').addEventListener('click', a
 
     if (response.ok) {
       usuarioId = data.usuarioId; // Armazena o ID do usuário retornado pelo backend
+      salvarDadosLocalStorage(); // Salva os dados no localStorage
       alert(data.message);
       mostrarTelaMonitoramento();
     } else {
@@ -53,6 +81,11 @@ document.getElementById('btn-iniciar-monitoramento').addEventListener('click', a
     console.error('Erro ao selecionar planta:', error);
     alert('Erro ao conectar com o servidor. Tente novamente.');
   }
+});
+
+// Botão para voltar à tela inicial
+document.getElementById('btn-voltar').addEventListener('click', () => {
+  mostrarTelaInicial();
 });
 
 // Função para buscar dados de umidade
@@ -117,7 +150,16 @@ function updateStatus(irrigacao, tipoPlanta) {
   statusMessage.appendChild(sensorMessage);
 }
 
-
+// Função para consultar dados históricos
+document.getElementById('consultar-dados').addEventListener('click', async () => {
+  try {
+    const response = await fetch(`${apiEndpoint}/dados`);
+    const data = await response.json();
+    document.getElementById('dados').textContent = JSON.stringify(data, null, 2);
+  } catch (error) {
+    console.error('Erro ao consultar dados:', error);
+  }
+});
 
 // Função para inicializar o gráfico
 function inicializarGrafico() {
@@ -165,6 +207,9 @@ function atualizarGrafico(umidade, timestamp) {
 
 // Inicializa o gráfico ao carregar a página
 inicializarGrafico();
+
+// Carrega os dados do localStorage ao iniciar
+carregarDadosLocalStorage();
 
 // Atualizar a cada 5 segundos
 setInterval(fetchMoistureData, 5000);

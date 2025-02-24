@@ -44,22 +44,23 @@
   </div>
 
   <!-- Tela 2: Monitoramento de Umidade -->
-  <div id="tela-monitoramento" class="container mt-5" style="display: none;">
-    <h1>Monitoramento de Umidade</h1>
-    <p id="nome-usuario-planta"></p>
-    <div id="bar-container">
-      <div id="bar"></div>
-    </div>
-    <p id="status-message" class="mt-3"></p>
-    
-    <pre id="dados" class="mt-3"></pre>
-
-    <!-- Gráfico de umidades -->
-    <div class="mt-5">
-      <h2>Histórico de Umidade</h2>
-      <canvas id="umidadeChart"></canvas>
-    </div>
+<div id="tela-monitoramento" class="container mt-5" style="display: none;">
+  <h1>Monitoramento de Umidade</h1>
+  <p id="nome-usuario-planta"></p>
+  <div id="bar-container">
+    <div id="bar"></div>
   </div>
+  <p id="status-message" class="mt-3"></p>
+  <button id="btn-voltar" class="btn btn-secondary">Voltar</button>
+  <button id="consultar-dados" class="btn btn-primary">Consultar Dados</button>
+  <pre id="dados" class="mt-3"></pre>
+
+  <!-- Gráfico de umidades -->
+  <div class="mt-5">
+    <h2>Histórico de Umidade</h2>
+    <canvas id="umidadeChart"></canvas>
+  </div>
+</div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="scripts.js"></script>
